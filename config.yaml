@@ -1,0 +1,22 @@
+v6: true
+dhcp_options:
+  - svc_prio: 10
+    adn: "foobar.com"
+    addresses:
+      - "fc0e::"
+      - "ae31::"
+    svc_params: alpn=h2,h3
+  - adn: "wibble.com"
+    addresses:
+      - "fc0e::"
+      - "ae31::"
+    svc_params: alpn=dot port=1234
+  - adn: "wibble.com"
+ra_options:
+  - svc_prio: 10
+    lifetime: 123445
+    adn: "foobar.com"
+    addresses:
+      - "fc0e::"
+      - "ae31::"
+    svc_params: alpn=h2,h3
