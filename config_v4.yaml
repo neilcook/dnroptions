@@ -1,0 +1,14 @@
+v6: false
+dhcp_options:
+  - svc_prio: 10
+    adn: "foobar.com"
+    addresses:
+      - "127.0.0.1"
+      - "192.243.2.1"
+    svc_params: alpn=h2,h3
+  - adn: "wibble.com"
+    addresses:
+      - "128.243.2.1"
+      - "8.8.8.8"
+    svc_params: alpn=h2 port=1234
+  - adn: "boo.com"
