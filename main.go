@@ -41,8 +41,24 @@ func LoadOptions(fpath string) (*DNROptions, error) {
 	return d, err
 }
 
+func hexEncode(b []byte, colon bool) []byte {
+	hexOpts := make([]byte, 0, 3*len(b))
+	x := hexOpts[1*len(b) : 3*len(b)]
+	hex.Encode(x, b)
+	if colon {
+		for i := 0; i < len(x); i += 2 {
+			hexOpts = append(hexOpts, x[i], x[i+1], ':')
+		}
+		hexOpts = hexOpts[:len(hexOpts)-1]
+	} else {
+		hexOpts = x
+	}
+	return hexOpts
+}
+
 func main() {
 	var configFile = flag.String("config", "config.yaml", "YAML config file")
+	var colonHex = flag.Bool("hexcolons", false, "Use colons to separate hex octets in output")
 	flag.Parse()
 
 	options, err := LoadOptions(*configFile)
@@ -53,10 +69,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("FATAL: Could not serialize options: %v", err)
 	}
-	hexOpts := make([]byte, hex.EncodedLen(len(encodedOpts)))
-	hex.Encode(hexOpts, encodedOpts)
+	hexOpts := hexEncode(encodedOpts, *colonHex)
 	if options.V6 {
-		fmt.Printf("DHCPV6=%s\n", hexOpts)
+		fmt.Printf("DHCPV6=%s\n", hexOpts[:len(hexOpts)])
 	} else {
 		fmt.Printf("DHCPV4=%s\n", hexOpts)
 	}
@@ -64,7 +79,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("FATAL: Could not serialize options: %v", err)
 	}
-	hexOpts = make([]byte, hex.EncodedLen(len(encodedOpts)))
-	hex.Encode(hexOpts, encodedOpts)
+	hexOpts = hexEncode(encodedOpts, *colonHex)
 	fmt.Printf("IPV6RA=%s\n", hexOpts)
 }
