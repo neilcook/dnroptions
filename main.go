@@ -58,7 +58,7 @@ func hexEncode(b []byte, colon bool) []byte {
 
 func main() {
 	var configFile = flag.String("config", "config.yaml", "YAML config file")
-	var colonHex = flag.Bool("hexcolons", false, "Use colons to separate hex octets in output")
+	var colonHex = flag.Bool("hexcolons", true, "Use colons to separate hex octets in output")
 	flag.Parse()
 
 	options, err := LoadOptions(*configFile)
