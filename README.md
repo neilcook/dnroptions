@@ -12,11 +12,13 @@ configuration of a DHCP server.
 
 The dnroptions tool enables you to put the required parameters into a simple YAML configuration file,
 and it then outputs Hex-encoded options which can be easily inserted into the configuration of DHCP
-servers such as ISC Kea or similar software.
+servers such as ISC Kea or similar software. By default the hex octets will be separated with colons;
+to use spaces instead, specify `--hexspaces=true`.
 
 The tool supports DHCPv6, DHCPv4 and RAv6 DNR options. It supports both single and muliple options. 
 For multiple options, it will output a single hex-encoded string with all the options concatenated 
-together; If you do not want this, then simply run the tool multiple times over different configuration files.
+together; If you do not want this (it's probably not what you want for V6 options), 
+then simply run the tool multiple times over different configuration files.
 
 The tool only output the option data itself, not the Option Code or the Option Length - these would
 be emitted by the server itself. For the RAv6 option, it does pad the option with zeros to an 8-octet 
@@ -35,7 +37,7 @@ dhcp_options:
 ````
 Running `dnroptions --config file_with_the_above_config.yaml` will produce the following output:
 ````
-DHCPV4=0023000a0c06666f6f62617203636f6d0000087f000001c0f30201616c706e3d68322c6833
+DHCPV4=00:23:00:0a:0c:06:66:6f:6f:62:61:72:03:63:6f:6d:00:00:08:7f:00:00:01:c0:f3:02:01:61:6c:70:6e:3d:68:32:2c:68:33
 IPV6RA=
 ````
 The default is for IPv4 options; it will complain if it sees IPv6 addresses. To create v6 options, use
@@ -52,7 +54,7 @@ dhcp_options:
 ````
 Running `dnroptions --config file_with_the_above_config.yaml` will produce the following output:
 ````
-DHCPV6=000a000c06666f6f62617203636f6d000020fc0e0000000000000000000000000000ae310000000000000000000000000000616c706e3d68322c6833
+DHCPV6=00:0a:00:0c:06:66:6f:6f:62:61:72:03:63:6f:6d:00:00:20:fc:0e:00:00:00:00:00:00:00:00:00:00:00:00:00:00:ae:31:00:00:00:00:00:00:00:00:00:00:00:00:00:00:61:6c:70:6e:3d:68:32:2c:68:33
 IPV6RA=
 ````
 To produce RAv6 options, use the following config:
@@ -69,7 +71,7 @@ ra_options:
 Running `dnroptions --config file_with_the_above_config.yaml` will produce the following output:
 ````
 DHCPV4=
-IPV6RA=000a0001e235000c06666f6f62617203636f6d000020fc0e0000000000000000000000000000ae310000000000000000000000000000000a616c706e3d68322c683300000000
+IPV6RA=00:0a:00:01:e2:35:00:0c:06:66:6f:6f:62:61:72:03:63:6f:6d:00:00:20:fc:0e:00:00:00:00:00:00:00:00:00:00:00:00:00:00:ae:31:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:0a:61:6c:70:6e:3d:68:32:2c:68:33:00:00:00:00
 ````
 You can specify multiple options at once, and the tool also supports specifying only the ADN. For example:
 ````
@@ -89,6 +91,7 @@ dhcp_options:
 ````
 Will produce:
 ````
-DHCPV4=0023000a0c06666f6f62617203636f6d0000087f000001c0f30201616c706e3d68322c6833002a00000c06776962626c6503636f6d00000880f3020108080808616c706e3d683220706f72743d31323334000e00000903626f6f03636f6d000000
+DHCPV4=00:23:00:0a:0c:06:66:6f:6f:62:61:72:03:63:6f:6d:00:00:08:7f:00:00:01:c0:f3:02:01:61:6c:70:6e:3d:68:32:2c:68:33:00:2a:00:00:0c:06:77:69:62:62:6c:65:03:63:6f:6d:00:00:08:80:f3:02:01:08:08:08:08:61:6c:70:6e:3d:68:32:20:70:6f:72:74:3d:31:32:33:34:00:0e:00:00:09:03:62:6f:6f:03:63:6f:6d:00:00:00
 IPV6RA=
 ````
+
