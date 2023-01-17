@@ -116,7 +116,7 @@ option dnrv6 00:0a:00:0c:06:66:6f:6f:62:61:72:03:63:6f:6d:00:00:20:fc:0e:00:00:0
 
 ## ISC Kea
 
-To add DNRv4 options to DHCP4:
+To add DNRv4 options to kea-dhcp4.conf:
 ````
 "Dhcp4": {
     // Other Kea configuration is removed for brevity
@@ -142,7 +142,7 @@ To add DNRv4 options to DHCP4:
 }
 ````
 
-To add DNRv6 options to DHCP6:
+To add DNRv6 options to kea-dhcp6.conf:
 ````
 "Dhcp6": {
     // Other Kea configuration is removed for brevity
