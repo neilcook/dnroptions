@@ -75,7 +75,7 @@ func main() {
 	hexOpts := hexEncode(encodedOpts, *spaceHex)
 	if hexOpts != nil {
 		if options.V6 {
-			fmt.Printf("DHCPV6=%s\n", hexOpts[:len(hexOpts)])
+			fmt.Printf("DHCPV6=%s\n", hexOpts)
 		} else {
 			fmt.Printf("DHCPV4=%s\n", hexOpts)
 		}
