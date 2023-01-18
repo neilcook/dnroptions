@@ -38,7 +38,6 @@ dhcp_options:
 Running `dnroptions --config file_with_the_above_config.yaml` will produce the following output:
 ````
 DHCPV4=00:23:00:0a:0c:06:66:6f:6f:62:61:72:03:63:6f:6d:00:00:08:7f:00:00:01:c0:f3:02:01:61:6c:70:6e:3d:68:32:2c:68:33
-IPV6RA=
 ````
 The default is for IPv4 options; it will complain if it sees IPv6 addresses. To create v6 options, use
 the following:
@@ -55,7 +54,6 @@ dhcp_options:
 Running `dnroptions --config file_with_the_above_config.yaml` will produce the following output:
 ````
 DHCPV6=00:0a:00:0c:06:66:6f:6f:62:61:72:03:63:6f:6d:00:00:20:fc:0e:00:00:00:00:00:00:00:00:00:00:00:00:00:00:ae:31:00:00:00:00:00:00:00:00:00:00:00:00:00:00:61:6c:70:6e:3d:68:32:2c:68:33
-IPV6RA=
 ````
 To produce RAv6 options, use the following config:
 ````
@@ -70,7 +68,6 @@ ra_options:
 ````
 Running `dnroptions --config file_with_the_above_config.yaml` will produce the following output:
 ````
-DHCPV4=
 IPV6RA=00:0a:00:01:e2:35:00:0c:06:66:6f:6f:62:61:72:03:63:6f:6d:00:00:20:fc:0e:00:00:00:00:00:00:00:00:00:00:00:00:00:00:ae:31:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:0a:61:6c:70:6e:3d:68:32:2c:68:33:00:00:00:00
 ````
 You can specify multiple options at once, and the tool also supports specifying only the ADN. For example:
@@ -92,7 +89,6 @@ dhcp_options:
 Will produce:
 ````
 DHCPV4=00:23:00:0a:0c:06:66:6f:6f:62:61:72:03:63:6f:6d:00:00:08:7f:00:00:01:c0:f3:02:01:61:6c:70:6e:3d:68:32:2c:68:33:00:2a:00:00:0c:06:77:69:62:62:6c:65:03:63:6f:6d:00:00:08:80:f3:02:01:08:08:08:08:61:6c:70:6e:3d:68:32:20:70:6f:72:74:3d:31:32:33:34:00:0e:00:00:09:03:62:6f:6f:03:63:6f:6d:00:00:00
-IPV6RA=
 ````
 
 # Configuring DHCP Servers
