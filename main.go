@@ -73,15 +73,19 @@ func main() {
 		log.Fatalf("FATAL: Could not serialize options: %v", err)
 	}
 	hexOpts := hexEncode(encodedOpts, *spaceHex)
-	if options.V6 {
-		fmt.Printf("DHCPV6=%s\n", hexOpts[:len(hexOpts)])
-	} else {
-		fmt.Printf("DHCPV4=%s\n", hexOpts)
+	if hexOpts != nil {
+		if options.V6 {
+			fmt.Printf("DHCPV6=%s\n", hexOpts[:len(hexOpts)])
+		} else {
+			fmt.Printf("DHCPV4=%s\n", hexOpts)
+		}
 	}
 	encodedOpts, err = options.RAOptions.Serialize()
 	if err != nil {
 		log.Fatalf("FATAL: Could not serialize options: %v", err)
 	}
 	hexOpts = hexEncode(encodedOpts, *spaceHex)
-	fmt.Printf("IPV6RA=%s\n", hexOpts)
+	if hexOpts != nil {
+		fmt.Printf("IPV6RA=%s\n", hexOpts)
+	}
 }
