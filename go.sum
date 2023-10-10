@@ -1,3 +1,5 @@
+github.com/bzick/tokenizer v1.3.0 h1:f8cwA0VFr0HLDedRJCOS3zJKnzYKQjE5syBtKDpfBho=
+github.com/bzick/tokenizer v1.3.0/go.mod h1:HYrKg9GGNb0/MCf7eGmz6ulvsxFfgyN+Ve3MqV2h5Zs=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/go-yaml/yaml v2.1.0+incompatible h1:RYi2hDdss1u4YE7GwixGzWwVo47T8UQwnTLB6vQiq+o=

@@ -6,6 +6,12 @@ import (
 	"strings"
 )
 
+func HostToNetByte(i uint8) []byte {
+	b := make([]byte, 1)
+	b[0] = i
+	return b
+}
+
 func HostToNetShort(i uint16) []byte {
 	b := make([]byte, 2)
 	binary.BigEndian.PutUint16(b, i)

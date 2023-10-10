@@ -76,7 +76,7 @@ func (d *RAOption) Serialize() ([]byte, error) {
 	}
 	optBuf = append(optBuf, HostToNetShort(uint16(len(d.ServiceParams)))...)
 	optBuf = append(optBuf, []byte(d.ServiceParams)...)
-	padBytes := (len(optBuf) + 2) % 8
+	padBytes := 8 - ((len(optBuf) + 2) % 8)
 	for i := 0; i < padBytes; i++ {
 		optBuf = append(optBuf, uint8(0))
 	}

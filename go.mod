@@ -3,6 +3,7 @@ module github.com/neilcook/dnroptions
 go 1.19
 
 require (
+	github.com/bzick/tokenizer v1.3.0
 	github.com/go-yaml/yaml v2.1.0+incompatible
 	github.com/miekg/dns v1.1.50
 	gopkg.in/dealancer/validate.v2 v2.1.0

@@ -61,7 +61,7 @@ func hexEncode(b []byte, space bool) []byte {
 
 func main() {
 	var configFile = flag.String("config", "config.yaml", "YAML config file")
-	var spaceHex = flag.Bool("hexspaces", false, "Use colons to separate hex octets in output")
+	var spaceHex = flag.Bool("hexspaces", false, "Use spaces to separate hex octets in output")
 	flag.Parse()
 
 	options, err := LoadOptions(*configFile)

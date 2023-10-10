@@ -87,7 +87,12 @@ func (d *DHCPOption) Serialize() ([]byte, error) {
 	} else {
 		addrLen = 4 * len(d.Addresses)
 	}
-	optBuf = append(optBuf, HostToNetShort(uint16(addrLen))...)
+	if d.V6 {
+		optBuf = append(optBuf, HostToNetShort(uint16(addrLen))...)
+	} else {
+		optBuf = append(optBuf, HostToNetByte(uint8(addrLen))...)
+	}
+	// IPv4 is only 8 bits
 	for _, a := range d.Addresses {
 		if d.V6 {
 			optBuf = append(optBuf, a.To16()...)
