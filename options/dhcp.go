@@ -10,11 +10,11 @@ import (
 
 // DHCPOption is for V6 or V4 DNR Options
 type DHCPOption struct {
-	V6              bool     `yaml:"-"`
-	ServicePriority uint16   `yaml:"svc_prio"`
-	ADN             string   `yaml:"adn"`
-	Addresses       []net.IP `yaml:"addresses"`
-	ServiceParams   string   `yaml:"svc_params"`
+	V6              bool       `yaml:"-"`
+	ServicePriority uint16     `yaml:"svc_prio"`
+	ADN             string     `yaml:"adn"`
+	Addresses       []net.IP   `yaml:"addresses"`
+	ServiceParams   SVCBRecord `yaml:"svc_params"`
 }
 
 type DHCPOptions struct {
@@ -38,13 +38,6 @@ func (d *DHCPOption) Validate() error {
 			return fmt.Errorf("Address %v is not an IPv6 address", a)
 		} else if !d.V6 && a.To4() == nil {
 			return fmt.Errorf("Address %v is not an IPv4 address", a)
-		}
-	}
-	// Validate ServiceParams according to Section 2.1 of [I-D.ietf-dnsop-svcb-https] if there are addresses
-	if len(d.Addresses) > 0 {
-		err := ValidateSvcParams(d.ServiceParams)
-		if err != nil {
-			return err
 		}
 	}
 	return nil
@@ -100,7 +93,13 @@ func (d *DHCPOption) Serialize() ([]byte, error) {
 			optBuf = append(optBuf, a.To4()...)
 		}
 	}
-	optBuf = append(optBuf, []byte(d.ServiceParams)...)
+	if d.ServiceParams.Record != nil {
+		spBuf, err := d.ServiceParams.Serialize()
+		if err != nil {
+			return nil, err
+		}
+		optBuf = append(optBuf, spBuf...)
+	}
 	// Update the length parameter for V4
 	if !d.V6 {
 		copy(optBuf[0:2], HostToNetShort(uint16(len(optBuf[2:]))))
