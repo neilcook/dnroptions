@@ -10,11 +10,11 @@ import (
 
 // RAOption is for V6 addresses
 type RAOption struct {
-	ServicePriority uint16   `yaml:"svc_prio"`
-	Lifetime        uint32   `yaml:"lifetime"`
-	ADN             string   `yaml:"adn"`
-	Addresses       []net.IP `yaml:"addresses"`
-	ServiceParams   string   `yaml:"svc_params" validate:"empty=false"`
+	ServicePriority uint16     `yaml:"svc_prio"`
+	Lifetime        uint32     `yaml:"lifetime"`
+	ADN             string     `yaml:"adn"`
+	Addresses       []net.IP   `yaml:"addresses"`
+	ServiceParams   SVCBRecord `yaml:"svc_params"`
 }
 
 type RAOptions struct {
@@ -35,13 +35,6 @@ func (d *RAOption) Validate() error {
 	for _, a := range d.Addresses {
 		if a.To4() != nil {
 			return fmt.Errorf("Address %v is not an IPv6 address", a)
-		}
-	}
-	// Validate ServiceParams according to Section 2.1 of [I-D.ietf-dnsop-svcb-https] if there are addresses
-	if len(d.Addresses) > 0 {
-		err := ValidateSvcParams(d.ServiceParams)
-		if err != nil {
-			return err
 		}
 	}
 	return nil
@@ -74,8 +67,14 @@ func (d *RAOption) Serialize() ([]byte, error) {
 	for _, a := range d.Addresses {
 		optBuf = append(optBuf, a.To16()...)
 	}
-	optBuf = append(optBuf, HostToNetShort(uint16(len(d.ServiceParams)))...)
-	optBuf = append(optBuf, []byte(d.ServiceParams)...)
+	if d.ServiceParams.Record != nil {
+		spBuf, err := d.ServiceParams.Serialize()
+		if err != nil {
+			return nil, err
+		}
+		optBuf = append(optBuf, HostToNetShort(uint16(len(spBuf)))...)
+		optBuf = append(optBuf, spBuf...)
+	}
 	padBytes := 8 - ((len(optBuf) + 2) % 8)
 	for i := 0; i < padBytes; i++ {
 		optBuf = append(optBuf, uint8(0))
